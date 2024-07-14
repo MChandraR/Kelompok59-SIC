@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Integrity Vision</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="shortcut icon" href="/static/images/favicon.ico"/>
+
+  <!--==Link Swiper's CSS====-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!--==Using-Font-Awesome-for-Icons=========-->
+  <script src="https://kit.fontawesome.com/6bd6c771de.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <header>
+    <a href="#home" class="brand">
+      <img src="{{ url_for('static', filename='image/logo.jpg') }}" class="nav-icon" />
+    </a>
+    <div class="menu-btn"></div>
+    <div class="navigation">
+      <div class="navigation-items">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang</a>
+        <a href="#application">Mulai Ujian</a>
+        <a href="#application">Hasil Ujian</a>
+        <a href="#team">Tim</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="home" id="home">
+    <video class="video-slide active"
+      src="{{ url_for('static', filename='video1.mp4') }}" autoplay muted
+      loop></video>
+    <video class="video-slide"
+      src="{{ url_for('static', filename='video/2.mp4') }}" autoplay muted
+      loop></video>
+    <video class="video-slide"
+      src="{{ url_for('static', filename='video/3.mp4') }}" autoplay
+      muted loop></video>
+    <video class="video-slide"
+      src="{{ url_for('static', filename='video/4.mp4') }}" autoplay muted
+      loop></video>
+
+    <div class="content">
+      <h1>Integrity Vision</h1>
+      <p>
+        Proyek ini mengembangkan aplikasi website yang menggunakan teknologi kecerdasan buatan (AI) dan Internet of Things (IoT) untuk mendeteksi kecurangan selama ujian mahasiswa. Aplikasi ini mengintegrasikan CCTV di ruang ujian untuk mengumpulkan video secara real-time, yang kemudian dianalisis oleh algoritma AI untuk mengidentifikasi perilaku mencurigakan seperti gerakan tidak biasa atau penggunaan perangkat terlarang. Administrator dan pengawas dapat memantau ujian secara langsung melalui dashboard, menerima notifikasi instan tentang potensi kecurangan, dan meninjau rekaman video untuk verifikasi. Data disimpan dengan aman, sesuai dengan regulasi privasi, dan analitik lanjutan memungkinkan peningkatan berkelanjutan pada sistem. Proyek ini bertujuan untuk memastikan integritas dan kejujuran dalam ujian akademis dengan memanfaatkan teknologi terkini.
+      </p>
+      <a href="#about">Read More</a>
+    </div>
+    <div class="slider-navigation">
+      <div class="nav-btn"></div>
+      <div class="nav-btn"></div>
+      <div class="nav-btn"></div>
+      <div class="nav-btn"></div>
+    </div>
+  </section>
+
+  <section class="about" id="about" style="background-color: black">
+    <div class="content-about">
+      <h3>Batasan Masalah</h3>
+      <div class="text-image-container">
+        <div class="conten-container">
+          <h1>Melihat teman</h1>
+          <br />
+          <p>Ciri-ciri Kecurangan:</p>
+          <ul>
+            <li>
+              Melihat teman kesamping dan  kebelakang
+            </li>
+            <li>
+              Melihat teman kesamping dan  kebelakang
+            </li>
+            <li>
+              Melihat teman kesamping dan  kebelakang
+            </li>
+            <li>
+              Melihat teman kesamping dan  kebelakang
+            </li>
+          </ul>
+        </div>
+        <img src="{{ url_for('static', filename='image/melihat_teman.jpg') }}" alt="melihat teman"
+          class="babi-image" />
+      </div>
+      <div class="text-image-container reverse">
+        <div class="conten-container">
+          <h1>Membuka Handphone</h1>
+          <br />
+          <p>Ciri-ciri Kecurangan:</p>
+          <ul>
+            <li>
+              Melihat Handphone
+            </li>
+            <li>
+              Melihat Handphone
+            </li>
+            <li>
+              Melihat Handphone
+            </li>
+            <li>
+              Melihat Handphone
+            </li>
+          </ul>
+        </div>
+        <img src="{{ url_for('static', filename='image/melihathp.jpg') }}" alt="Babi" class="melihat_teman" />
+  </section>
+
+  <!-- Menu Kamera -->
+
+  <section class="container"
+    style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ url_for('static', filename='image/background.jpg') }}');"
+    id="application">
+    <h3 class="application-title">Application</h3>
+    <div class="container-content">
+      <button type="button" class="btn btn-primary" onclick="startVideo()">Mulai Ujian</button>
+      <button type="button" class="btn btn-danger" onclick="stopVideo()" style="display:none;" id="stop-button">Akhiri Ujian</button>
+      <div class="video-container" id="video-container" style="display:none;">
+        <video id="video" width="640" height="480" autoplay></video>
+      </div>
+    </div>
+</section>
+
+<!-- Menu Team -->
+
+
+  <section id="team" style="background-color: black">
+    <div class="team-heading">
+      <h3 class="our-team-tittle">Our Team</h3>
+    </div>
+    <!--**slider*****************-->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <!--==1==================-->
+        <div class="swiper-slide">
+          <!--slider-box-->
+          <div class="team-slider-box">
+            <!--==Img==================-->
+            <div class="t-s-img">
+              <img src="{{ url_for('static', filename='image/1.png') }}" alt="team" />
+            </div>
+            <!--==Text=================-->
+            <div class="t-s-text">
+              <strong>Akhiril Anwar Harahap</strong>
+              <span>Front-End Developer</span>
+              <div class="team-social">
+                <li style="--i: 1">
+                  <a href="https://www.instagram.com/itsmevirgous/?igshid=ZGUzMzM3NWJiOQ%3D%3D">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </li>
+                <li style="--i: 2">
+                  <a href="https://www.linkedin.com/in/akhiril-anwar-harahap-8432851b9/">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </li>
+                <li style="--i: 3">
+                  <a href="https://github.com/akhirilanwarharahap">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </li>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!--==2==================-->
+        <div class="swiper-slide">
+          <!--slider-box-->
+          <div class="team-slider-box">
+            <!--==Img==================-->
+            <div class="t-s-img">
+              <img src="{{ url_for('static', filename='image/2.png') }}" alt="team" />
+            </div>
+            <!--==Text=================-->
+            <div class="t-s-text">
+              <strong>Muhammad Chandra Ramadhan</strong>
+              <span>Front-End Developer</span>
+              <div class="team-social">
+                <li style="--i: 1">
+                  <a href="#">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </li>
+                <li style="--i: 2">
+                  <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </li>
+                <li style="--i: 3">
+                  <a href="#">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </li>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!--==3==================-->
+        <div class="swiper-slide">
+          <!--slider-box-->
+          <div class="team-slider-box">
+            <!--==Img==================-->
+            <div class="t-s-img">
+              <img src="{{ url_for('static', filename='image/3.png') }}" alt="team" />
+            </div>
+            <!--==Text=================-->
+            <div class="t-s-text">
+              <strong>Luthfiyah Annisa</strong>
+              <span>UI Designer</span>
+              <div class="team-social">
+                <li style="--i: 1">
+                  <a href="#">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </li>
+                <li style="--i: 2">
+                  <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </li>
+                <li style="--i: 3">
+                  <a href="#">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </li>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--==4==================-->
+        <div class="swiper-slide">
+          <!--slider-box-->
+          <div class="team-slider-box">
+            <!--==Img==================-->
+            <div class="t-s-img">
+              <img src="{{ url_for('static', filename='image/4.png') }}" alt="team" />
+            </div>
+            <!--==Text=================-->
+            <div class="t-s-text">
+              <strong>Alika Dwi Yanti</strong>
+              <span>IOT Developer</span>
+              <div class="team-social">
+                <li style="--i: 1">
+                  <a href="#">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                </li>
+                <li style="--i: 2">
+                  <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </li>
+                <li style="--i: 3">
+                  <a href="#">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </li>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#00000" fill-opacity="1"
+        d="M0,160L30,181.3C60,203,120,245,180,240C240,235,300,181,360,144C420,107,480,85,540,112C600,139,660,213,720,240C780,267,840,245,900,234.7C960,224,1020,224,1080,229.3C1140,235,1200,245,1260,229.3C1320,213,1380,171,1410,149.3L1440,128L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z">
+      </path>
+    </svg>
+    <div class="footer-section">
+      <h3>Support By:</h3>
+      <div class="logo-container">
+        <a href="https://csr.samsung.com/id/programViewSic.do" target="_blank"><img
+            src="{{ url_for('static', filename='image/SIC.png') }}" alt="SIC" /></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: {
+        rotate: 20,
+        stretch: -20,
+        depth: 120,
+        modifier: 3,
+        slideShadows: true,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+    });
+  </script>
+  <script type="text/javascript">
+    //Javascript of responsive  navigation menu
+    const menuBtn = document.querySelector(".menu-btn");
+    const navigation = document.querySelector(".navigation");
+
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("active");
+      navigation.classList.toggle("active");
+    });
+
+    //Javascript for video slider navigation
+    const btns = document.querySelectorAll(".nav-btn");
+    const slides = document.querySelectorAll(".video-slide");
+
+    var sliderNav = function (manual) {
+      btns.forEach((btn) => {
+        btn.classList.remove("active");
+      });
+
+      slides.forEach((slide) => {
+        slide.classList.remove("active");
+      });
+
+      btns[manual].classList.add("active");
+      slides[manual].classList.add("active");
+    };
+
+    btns.forEach((btn, i) => {
+      btn.addEventListener("click", () => {
+        sliderNav(i);
+      });
+    });
+
+    //Javascript slide otomatis
+    const slide = document.querySelectorAll(".video-slide");
+    const navBtns = document.querySelectorAll(".nav-btn");
+    let currentSlide = 0;
+    const slideInterval = 5000; // Interval waktu antara perpindahan slide (dalam milidetik)
+
+    // Fungsi untuk mengatur slide berikutnya
+    function nextSlide() {
+      slides[currentSlide].classList.remove("active");
+      navBtns[currentSlide].classList.remove("active");
+
+      currentSlide = (currentSlide + 1) % slides.length;
+
+      slides[currentSlide].classList.add("active");
+      navBtns[currentSlide].classList.add("active");
+    }
+
+    // Mulai perpindahan slide otomatis
+    setInterval(nextSlide, slideInterval);
+
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        fileInput.files = files;
+      }
+    });
+
+    browseBtn.addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length > 0) {
+        console.log(fileInput.files[0]);
+      }
+    });
+  </script>
+
+<!-- Memulai dan Mengakhiri Video -->
+
+<script>
+  let stream;
+  
+  function startVideo() {
+      const video = document.getElementById('video');
+      const videoContainer = document.getElementById('video-container');
+      const stopButton = document.getElementById('stop-button');
+      videoContainer.style.display = 'block';
+      stopButton.style.display = 'inline-block';
+  
+      if (navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ video: true })
+              .then(function (mediaStream) {
+                  stream = mediaStream;
+                  video.srcObject = mediaStream;
+              })
+              .catch(function (error) {
+                  console.log("Something went wrong!", error);
+              });
+      }
+  }
+  
+  function stopVideo() {
+      const videoContainer = document.getElementById('video-container');
+      const stopButton = document.getElementById('stop-button');
+      videoContainer.style.display = 'none';
+      stopButton.style.display = 'none';
+  
+      if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach(track => track.stop());
+      }
+  }
+  </script>
+
+
+</body>
+
+</html>
