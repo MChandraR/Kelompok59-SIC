@@ -36,6 +36,6 @@ Proyek ini bertujuan untuk mendeteksi kecurangan ujian. Tujuan akhirnya adalah u
    flask run
    ```
 
-  Atau bisa dengan kunjungi website ini [Project Data Analytics](https://xxxxxxxx.app/) --> Masih dalam pengembangan
+  Atau bisa dengan kunjungi website ini [Project SIC 59](https://xxxxxxxx.app/) --> Masih dalam pengembangan
 
 
