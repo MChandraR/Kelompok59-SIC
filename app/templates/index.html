@@ -123,7 +123,15 @@
       <button type="button" class="btn btn-primary" onclick="startVideo()">Mulai Ujian</button>
       <button type="button" class="btn btn-danger" onclick="stopVideo()" style="display:none;" id="stop-button">Akhiri Ujian</button>
       <div class="video-container" id="video-container" style="display:none;">
-        <video id="video" width="640" height="480" autoplay></video>
+        <!-- <video id="video" width="640" height="480" autoplay></video> -->
+         <div style="display:flex;">
+           <img id="video-stream" src="" alt="Video Stream" style="width : 45wh; ">
+           <div style="width:45wh; height : 80vh; overflow:auto; padding : 1rem ;">
+              <b>Log kecurangan</b><hr>
+              <p align="left" id="log-field" style="white-space: pre-line; margin-top : 1rem;"></p>
+           </div>
+         </div>
+
       </div>
     </div>
 </section>
@@ -429,9 +437,23 @@
           tracks.forEach(track => track.stop());
       }
   }
+
   </script>
 
+  <script type="module">
+    import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+    const socket = io('http://localhost:3000');
 
+    socket.on('frame_data', (data) => {
+        const img = document.getElementById('video-stream');
+        document.getElementById('log-field').innerHTML += "Get frame &#10;&#13;";
+        img.src = 'data:image/jpeg;base64,' + data;
+    });
+
+    socket.on('connect', () => {
+        console.log('Connected to server');
+    });
+</script>
 </body>
 
 </html>
