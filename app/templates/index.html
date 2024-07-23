@@ -37,7 +37,7 @@
 
   <section class="home" id="home">
     <video class="video-slide active"
-      src="{{ url_for('static', filename='video1.mp4') }}" autoplay muted
+      src="{{ url_for('static', filename='video/1.mp4') }}" autoplay muted
       loop></video>
     <video class="video-slide"
       src="{{ url_for('static', filename='video/2.mp4') }}" autoplay muted
@@ -130,11 +130,12 @@
               <b>Log kecurangan</b><hr>
               <p align="left" id="log-field" style="white-space: pre-line; margin-top : 1rem;"></p>
            </div>
-         </div>
-
+          </div>
+          
+        </div>
       </div>
-    </div>
-</section>
+    </section>
+    <!-- <audio src="../static/audio/notif.mp3" controls></audio> -->
 
 <!-- Menu Team -->
 
@@ -400,20 +401,64 @@
         console.log(fileInput.files[0]);
       }
     });
+
   </script>
 
 <!-- Memulai dan Mengakhiri Video -->
 
+
+
+  <script type="module">
+    import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+    const socket = io('http://localhost:3000');
+    const notif = new Audio();
+    notif.src = "../static/audio/notif.mp3";
+
+    socket.on('frame_data', (data) => {
+        const img = document.getElementById('video-stream');
+        img.src = 'data:image/jpeg;base64,' + data;
+    });
+
+    function startStreams(){
+      socket.emit("start_ujian", "start");
+    }
+
+    function stopStreams(){
+      socket.emit("stop_ujian", "start");
+    }
+
+
+
+    window.startStream = startStreams;
+    window.stopStream = stopStreams;
+
+    socket.on('notify', (data) => {
+      var d = new Date(); // for now
+    d.getHours(); // => 9
+    d.getMinutes(); // =>  30
+    d.getSeconds();
+      document.getElementById('log-field').innerHTML = "Terdeteksi, time :  "+d.getHours()+": "+d.getMinutes()+" : "+d.getSeconds()+" &#10;&#13;" + document.getElementById('log-field').innerHTML;
+      try{
+        notif.play();
+      }catch(e){
+        console.log(e);
+      }
+  });
+
+    socket.on('connect', () => {
+        console.log('Connected to server');
+    });
+</script>
+
 <script>
   let stream;
-  
   function startVideo() {
       const video = document.getElementById('video');
       const videoContainer = document.getElementById('video-container');
       const stopButton = document.getElementById('stop-button');
       videoContainer.style.display = 'block';
       stopButton.style.display = 'inline-block';
-  
+      window.startStream();
       if (navigator.mediaDevices.getUserMedia) {
           navigator.mediaDevices.getUserMedia({ video: true })
               .then(function (mediaStream) {
@@ -431,7 +476,7 @@
       const stopButton = document.getElementById('stop-button');
       videoContainer.style.display = 'none';
       stopButton.style.display = 'none';
-  
+      window.stopStream();
       if (stream) {
           const tracks = stream.getTracks();
           tracks.forEach(track => track.stop());
@@ -439,21 +484,6 @@
   }
 
   </script>
-
-  <script type="module">
-    import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
-    const socket = io('http://localhost:3000');
-
-    socket.on('frame_data', (data) => {
-        const img = document.getElementById('video-stream');
-        document.getElementById('log-field').innerHTML += "Get frame &#10;&#13;";
-        img.src = 'data:image/jpeg;base64,' + data;
-    });
-
-    socket.on('connect', () => {
-        console.log('Connected to server');
-    });
-</script>
 </body>
 
 </html>
