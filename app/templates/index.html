@@ -29,7 +29,7 @@
         <a href="#home">Home</a>
         <a href="#about">Tentang</a>
         <a href="#application">Mulai Ujian</a>
-        <a href="#application">Hasil Ujian</a>
+        <a href="#hasil">Hasil Ujian</a>
         <a href="#team">Tim</a>
       </div>
     </div>
@@ -74,16 +74,16 @@
           <p>Ciri-ciri Kecurangan:</p>
           <ul>
             <li>
-              Melihat teman kesamping dan  kebelakang
+              Melihat teman kesamping
             </li>
             <li>
-              Melihat teman kesamping dan  kebelakang
+              Melihat teman kebelakang
             </li>
             <li>
-              Melihat teman kesamping dan  kebelakang
+              Memberikan kode dengan jari 
             </li>
             <li>
-              Melihat teman kesamping dan  kebelakang
+              Menyerahkan lembar jawaban atau media lainnya
             </li>
           </ul>
         </div>
@@ -97,16 +97,10 @@
           <p>Ciri-ciri Kecurangan:</p>
           <ul>
             <li>
-              Melihat Handphone
+              Melihat Handphone dari bawah meja
             </li>
             <li>
-              Melihat Handphone
-            </li>
-            <li>
-              Melihat Handphone
-            </li>
-            <li>
-              Melihat Handphone
+              Melihat Handphone yang diselipkan di lembar jawaban/soal
             </li>
           </ul>
         </div>
@@ -115,18 +109,18 @@
 
   <!-- Menu Kamera -->
 
-  <section class="container"
+  <section class=""
     style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ url_for('static', filename='image/background.jpg') }}');"
     id="application">
     <h3 class="application-title">Application</h3>
     <div class="container-content">
-      <button type="button" class="btn btn-primary" onclick="startVideo()">Mulai Ujian</button>
-      <button type="button" class="btn btn-danger" onclick="stopVideo()" style="display:none;" id="stop-button">Akhiri Ujian</button>
-      <div class="video-container" id="video-container" style="display:none;">
+      <button type="button" class="btn btn-primary" onclick="startVideo()" style=" padding : .4rem; border-radius : 1rem;">Mulai Sesi</button>
+      <button type="button" class="btn btn-danger" onclick="stopVideo()" style="display:none; padding : .4rem; border-radius : 1rem;" id="stop-button">Akhiri Sesi</button>
+      <div class="video-container" id="video-container" style="display:none;width : 90wh;">
         <!-- <video id="video" width="640" height="480" autoplay></video> -->
-         <div style="display:flex;">
-           <img id="video-stream" src="" alt="Video Stream" style="width : 45wh; ">
-           <div style="width:45wh; height : 80vh; overflow:auto; padding : 1rem ;">
+         <div style="display:flex; width : 80wh;">
+           <img id="video-stream" src="" alt="Video Stream" style="width : 45wh; object-fit: fill;">
+           <div style="width:45wh; max-height: 70vh; overflow:auto; padding : 1rem ;">
               <b>Log kecurangan</b><hr>
               <p align="left" id="log-field" style="white-space: pre-line; margin-top : 1rem;"></p>
            </div>
@@ -136,6 +130,26 @@
       </div>
     </section>
     <!-- <audio src="../static/audio/notif.mp3" controls></audio> -->
+
+
+    <section class="hasil"
+    style="background-image: white;"
+    id="hasil">
+    <div>
+      <h2>Log Ujian</h2><hr>
+      <span id="jumlah-curang">Jumlah deteksi :</span><br><br>
+      <div class="galery" id="bukti">
+        <!-- <div>
+          <img src="{{ url_for('static', filename='image/background.jpg') }}" alt=""><br>
+          <div>
+            <button ><img src="{{ url_for('static', filename='image/check-mark.png') }}" alt=""></button>
+            <button ><img src="{{ url_for('static', filename='image/close.png') }}" alt=""></button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </section>
+
 
 <!-- Menu Team -->
 
@@ -221,7 +235,7 @@
           <div class="team-slider-box">
             <!--==Img==================-->
             <div class="t-s-img">
-              <img src="{{ url_for('static', filename='image/3.png') }}" alt="team" />
+              <img src="{{ url_for('static', filename='image/10.png') }}" alt="team" />
             </div>
             <!--==Text=================-->
             <div class="t-s-text">
@@ -410,13 +424,15 @@
 
   <script type="module">
     import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
-    const socket = io('http://localhost:3000');
+    const socket = io('localhost:3000');
     const notif = new Audio();
     notif.src = "../static/audio/notif.mp3";
 
     socket.on('frame_data', (data) => {
         const img = document.getElementById('video-stream');
+        img.style.width = "80%";
         img.src = 'data:image/jpeg;base64,' + data;
+       
     });
 
     function startStreams(){
@@ -428,21 +444,61 @@
     }
 
 
+    const counter = document.getElementById("jumlah-curang");
 
     window.startStream = startStreams;
     window.stopStream = stopStreams;
-
+    let count = 0;
     socket.on('notify', (data) => {
+      count += 1;
+      const bukti = document.getElementById('bukti');
+      const div1 = document.createElement("div");
+      const div2 = document.createElement("div");
+      const btn1 = document.createElement("button");
+      const btn2 = document.createElement("button");
+      const gmbr = document.createElement("img");
+      const oke = document.createElement("img");
+      const cancel = document.createElement("img");
+      gmbr.src = 'data:image/jpeg;base64,' + data;
+      oke.src = "{{ url_for('static', filename='image/check-mark.png') }}";
+      cancel.src = "{{ url_for('static', filename='image/close.png') }}";
+      counter.innerText = "Jumlah curang : " + count.toString();
+      btn1.addEventListener('click', (e)=>{
+        const formData = new FormData();
+        formData.append('image', data);
+        formData.append('name', "image" + count.toString());
+
+        fetch('http://localhost:5000/upload_image', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(datas => {
+            console.log('Success:', datas);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+      });
+      btn1.append(oke);
+      btn2.append(cancel);
+      div2.append(btn1);
+      div2.append(btn2);
+      div1.append(gmbr);
+      div1.append(div2);
+      bukti.appendChild(div1);
       var d = new Date(); // for now
-    d.getHours(); // => 9
-    d.getMinutes(); // =>  30
-    d.getSeconds();
-      document.getElementById('log-field').innerHTML = "Terdeteksi, time :  "+d.getHours()+": "+d.getMinutes()+" : "+d.getSeconds()+" &#10;&#13;" + document.getElementById('log-field').innerHTML;
+      d.getHours("HH"); // => 9
+      d.getMinutes("MM"); // =>  30
+      d.getSeconds("ss");
+      document.getElementById('log-field').innerHTML = "Terdeteksi, waktu :  "+d.getHours()+": "+d.getMinutes()+" : "+d.getSeconds()+" &#10; <hr>" + document.getElementById('log-field').innerHTML 
       try{
         notif.play();
       }catch(e){
         console.log(e);
       }
+
+      
   });
 
     socket.on('connect', () => {

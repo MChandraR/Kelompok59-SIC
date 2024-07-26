@@ -1,0 +1,6 @@
+check-mark.png
+<a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Ian June - Flaticon</a>
+
+
+close.png
+<a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Pixel perfect - Flaticon</a>
